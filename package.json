@@ -1,0 +1,15 @@
+{
+  "name": "python-range",
+  "version": "0.1.0",
+  "description": "A JavaScript implementation of the Python's range() function.",
+  "keywords": [
+    "python",
+    "range"
+  ],
+  "license": "MIT",
+  "author": "Gothdo <michal@perlakowski.pl> (https://github.com/Gothdo)",
+  "main": "build/index.js",
+  "repository": "Gothdo/range",
+  "devDependencies": {},
+  "dependencies": {}
+}

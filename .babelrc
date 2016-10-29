@@ -1,0 +1,14 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "edge": 12,
+        "firefox": 42,
+        "chrome": 49,
+        "safari": 10,
+        "node": 6
+      }
+    }]
+  ],
+  "plugins": ["transform-object-rest-spread"]
+}

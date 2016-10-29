@@ -11,6 +11,9 @@
   "main": "build/index.js",
   "repository": "Gothdo/range",
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-env": "0.0.6",
     "eslint": "^3.9.0",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1"

@@ -10,6 +10,10 @@
   "author": "Gothdo <michal@perlakowski.pl> (https://github.com/Gothdo)",
   "main": "build/index.js",
   "repository": "Gothdo/range",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.9.0",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1"
+  },
   "dependencies": {}
 }

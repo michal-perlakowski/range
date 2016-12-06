@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import { head, last } from 'lodash';
 import ArrayIndicesProxy from './array-indices-proxy';
 
 const mod = (n, m) => ((n % m) + m) % m;
@@ -98,6 +99,24 @@ export class PythonRange {
         ? value >= this.start && value < this.stop
         : value > this.stop && value <= this.start)
       && mod(value - this.start, this.step) === 0;
+  }
+  min(...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected zero arguments; got ${rest.length}`);
+    }
+    if (this.length !== 0) {
+      return this.step > 0 ? head(this) : last(this);
+    }
+    return Infinity;
+  }
+  max(...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected zero arguments; got ${rest.length}`);
+    }
+    if (this.length !== 0) {
+      return this.step > 0 ? last(this) : head(this);
+    }
+    return -Infinity;
   }
 }
 export default function range(...args) {

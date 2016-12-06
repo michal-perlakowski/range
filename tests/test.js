@@ -153,4 +153,26 @@ describe('PythonRange', () => {
       expect(range(10, 0, -2).includes(0)).to.be.false;
     });
   });
+  describe('#min', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => range(3).min(1)).to.throw(Error);
+    });
+    it('returns the smallest value in the range', () => {
+      expect(range(0).min()).to.equal(Infinity);
+      expect(range(3).min()).to.equal(0);
+      expect(range(2, 4).min()).to.equal(2);
+      expect(range(10, 0, -2).min()).to.equal(2);
+    });
+  });
+  describe('#max', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => range(3).max(1)).to.throw(Error);
+    });
+    it('returns the largest value in the range', () => {
+      expect(range(0).max()).to.equal(-Infinity);
+      expect(range(3).max()).to.equal(2);
+      expect(range(2, 4).max()).to.equal(3);
+      expect(range(10, 0, -2).max()).to.equal(10);
+    });
+  });
 });

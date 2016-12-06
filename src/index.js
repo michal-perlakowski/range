@@ -1,6 +1,12 @@
 import 'babel-polyfill';
 import ArrayIndicesProxy from './array-indices-proxy';
 
+const mod = (n, m) => ((n % m) + m) % m;
+
+const mandatory = (parameter) => {
+  throw new Error(`The ${parameter} parameter is mandatory`);
+};
+
 export class PythonRange {
   constructor(...args) {
     if (args.length < 1) {
@@ -80,6 +86,18 @@ export class PythonRange {
     });
 
     return proxy;
+  }
+  includes(value = mandatory('value'), ...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected one argument; got ${rest.length + 1}`);
+    }
+    if (!Number.isInteger(value)) {
+      throw new Error('The value argument must be an integer');
+    }
+    return (this.step > 0
+        ? value >= this.start && value < this.stop
+        : value > this.stop && value <= this.start)
+      && mod(value - this.start, this.step) === 0;
   }
 }
 export default function range(...args) {

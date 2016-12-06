@@ -127,4 +127,30 @@ describe('PythonRange', () => {
   it('returns a correct result for Reflect.ownKeys()', () => {
     expect(Reflect.ownKeys(range(3))).to.deep.equal(['start', 'stop', 'step', 'length', '0', '1', '2']);
   });
+  describe('#includes', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => range(3).includes()).to.throw(Error);
+      expect(() => range(3).includes('1')).to.throw(Error);
+      expect(() => range(3).includes(3, 5)).to.throw(Error);
+    });
+    it('returns true if the range includes the specifed number', () => {
+      expect(range(3).includes(0)).to.be.true;
+      expect(range(3).includes(2)).to.be.true;
+      expect(range(2, 5).includes(2)).to.be.true;
+      expect(range(2, 5).includes(3)).to.be.true;
+      expect(range(2, 5).includes(4)).to.be.true;
+      expect(range(10, 0, -2).includes(10)).to.be.true;
+      expect(range(10, 0, -2).includes(8)).to.be.true;
+      expect(range(10, 0, -2).includes(2)).to.be.true;
+    });
+    it('returns false if the range doesn\'t include the specified number', () => {
+      expect(range(3).includes(-1)).to.be.false;
+      expect(range(3).includes(3)).to.be.false;
+      expect(range(2, 5).includes(1)).to.be.false;
+      expect(range(2, 5).includes(5)).to.be.false;
+      expect(range(10, 0, -2).includes(11)).to.be.false;
+      expect(range(10, 0, -2).includes(9)).to.be.false;
+      expect(range(10, 0, -2).includes(0)).to.be.false;
+    });
+  });
 });

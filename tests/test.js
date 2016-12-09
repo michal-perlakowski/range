@@ -239,6 +239,12 @@ describe('PythonRange', () => {
       expect(PythonRange.areEqual(range(0, 3), range(3))).to.be.true;
       expect(PythonRange.areEqual(range(0), range(5, 5))).to.be.true;
       expect(PythonRange.areEqual(range(3), range(3))).to.be.true;
+      expect(PythonRange.areEqual(range(3, 10, 15), range(3, 11, 15))).to.be.true;
+    });
+    it('returns false if the ranges are not equal', () => {
+      expect(PythonRange.areEqual(range(3), range(4))).to.be.false;
+      expect(PythonRange.areEqual(range(2, 3), range(3, 4))).to.be.false;
+      expect(PythonRange.areEqual(range(0, 5, 1), range(0, 5, 2))).to.be.false;
     });
   });
 });

@@ -185,6 +185,26 @@ describe('PythonRange', () => {
       expect(range(10, 0, -2).max()).to.equal(10);
     });
   });
+  describe('#reverse', () => {
+    it('throws an error when called with more than 0 arguments', () => {
+      expect(() => range(3).reverse(true)).to.throw(Error);
+    });
+    it('changes the original range', () => {
+      const r = range(3);
+      r.reverse();
+      expect(PythonRange.areEqual(r, range(2, -1, -1)));
+    });
+    it('returns the range', () => {
+      const r = range(3);
+      expect(r === r.reverse()).to.be.true;
+    });
+    it('reverses the range', () => {
+      expect(PythonRange.areEqual(range(3).reverse(), range(2, -1, -1))).to.be.true;
+      expect(PythonRange.areEqual(range(2, 5).reverse(), range(4, 1, -1))).to.be.true;
+      expect(PythonRange.areEqual(range(0, 10, 2).reverse(), range(8, -1, -2))).to.be.true;
+      expect(PythonRange.areEqual(range(0, 3, 3).reverse(), range(0, 1))).to.be.true;
+    });
+  });
   describe('PythonRange.areEqual()', () => {
     it('throws an error for invalid arguments', () => {
       expect(() => PythonRange.areEqual()).to.throw(Error);

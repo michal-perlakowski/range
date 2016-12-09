@@ -125,6 +125,13 @@ export class PythonRange {
     }
     return -Infinity;
   }
+  reverse(...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected zero arguments; got ${rest.length}`);
+    }
+    [this.start, this.stop, this.step] = [last(this), this.start - 1, -this.step];
+    return this;
+  }
   static areEqual(a = mandatory('a'), b = mandatory('b'), ...rest) {
     if (rest.length !== 0) {
       throw new Error(`Expected two arguments; got ${rest.length + 2}`);

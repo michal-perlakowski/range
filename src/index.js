@@ -45,6 +45,13 @@ export class PythonRange {
       },
     });
 
+    Reflect.defineProperty(this, Symbol.toStringTag, {
+      configurable: false,
+      enumerable: false,
+      writable: false,
+      value: 'PythonRange',
+    });
+
     const proxy = new Proxy(this, {
       set(target, property, value) {
         return (property === 'length') ? false : Reflect.set(target, property, value);

@@ -205,6 +205,15 @@ describe('PythonRange', () => {
       expect(PythonRange.areEqual(range(0, 3, 3).reverse(), range(0, 1))).to.be.true;
     });
   });
+  describe('@@iterator', () => {
+    it('iterates the range', () => {
+      const result = [];
+      for (const element of range(3)) { // eslint-disable-line
+        result.push(element);
+      }
+      expect(result).to.deep.equal([0, 1, 2]);
+    });
+  });
   describe('PythonRange.areEqual()', () => {
     it('throws an error for invalid arguments', () => {
       expect(() => PythonRange.areEqual()).to.throw(Error);

@@ -132,6 +132,9 @@ export class PythonRange {
     [this.start, this.stop, this.step] = [last(this), this.start - 1, -this.step];
     return this;
   }
+  [Symbol.iterator]() {
+    return Reflect.apply(Array.prototype.values, this, []);
+  }
   static areEqual(a = mandatory('a'), b = mandatory('b'), ...rest) {
     if (rest.length !== 0) {
       throw new Error(`Expected two arguments; got ${rest.length + 2}`);

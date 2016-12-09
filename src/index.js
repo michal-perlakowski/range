@@ -118,6 +118,21 @@ export class PythonRange {
     }
     return -Infinity;
   }
+  static areEqual(a = mandatory('a'), b = mandatory('b'), ...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected two arguments; got ${rest.length + 2}`);
+    }
+    if (![a, b].every(x => x instanceof PythonRange)) {
+      throw new Error('Both arguments must be instances of PythonRange');
+    }
+    // Based on https://github.com/python/cpython/blob/cff677abe1823900e954592035a170eb67840971/Objects/rangeobject.c#L425
+    if (a === b) return true;
+    if (a.length !== b.length) return false;
+    if (a.length === 0) return true;
+    if (a.start !== b.start) return false;
+    if (a.length === 1) return true;
+    return a.step === b.step;
+  }
 }
 export default function range(...args) {
   return new PythonRange(...args);

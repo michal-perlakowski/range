@@ -175,4 +175,19 @@ describe('PythonRange', () => {
       expect(range(10, 0, -2).max()).to.equal(10);
     });
   });
+  describe('PythonRange.areEqual()', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => PythonRange.areEqual()).to.throw(Error);
+      expect(() => PythonRange.areEqual(range(3))).to.throw(Error);
+      expect(() => PythonRange.areEqual(1, 2)).to.throw(Error);
+      expect(() => PythonRange.areEqual(range(3), range(4), range(5))).to.throw(Error);
+    });
+    it('returns true if the ranges are equal', () => {
+      const r = range(2);
+      expect(PythonRange.areEqual(r, r)).to.be.true;
+      expect(PythonRange.areEqual(range(0, 3), range(3))).to.be.true;
+      expect(PythonRange.areEqual(range(0), range(5, 5))).to.be.true;
+      expect(PythonRange.areEqual(range(3), range(3))).to.be.true;
+    });
+  });
 });

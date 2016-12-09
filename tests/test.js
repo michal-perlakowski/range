@@ -214,6 +214,18 @@ describe('PythonRange', () => {
       expect(result).to.deep.equal([0, 1, 2]);
     });
   });
+  describe('#toString', () => {
+    it('returns a string representation of the range', () => {
+      expect(range(3).toString()).to.equal('range(0, 3, 1)');
+      expect(range(4, 2, -1).toString()).to.equal('range(4, 2, -1)');
+    });
+  });
+  describe('#valueOf', () => {
+    it('returns the result of toString() method', () => {
+      expect(range(3).valueOf()).to.equal(range(3).toString());
+      expect(range(4, 2, -1).valueOf()).to.equal(range(4, 2, -1).toString());
+    });
+  });
   describe('PythonRange.areEqual()', () => {
     it('throws an error for invalid arguments', () => {
       expect(() => PythonRange.areEqual()).to.throw(Error);

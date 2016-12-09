@@ -132,6 +132,12 @@ export class PythonRange {
     [this.start, this.stop, this.step] = [last(this), this.start - 1, -this.step];
     return this;
   }
+  toString() {
+    return `range(${this.start}, ${this.stop}, ${this.step})`;
+  }
+  valueOf() {
+    return this.toString();
+  }
   [Symbol.iterator]() {
     return Reflect.apply(Array.prototype.values, this, []);
   }

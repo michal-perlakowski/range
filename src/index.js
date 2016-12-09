@@ -35,16 +35,23 @@ export class PythonRange {
     Reflect.defineProperty(this, 'stop', { ...descriptor, value: stop });
     Reflect.defineProperty(this, 'step', { ...descriptor, value: step });
 
-    const difference = step > 0 ? stop - start : start - stop;
-    const length = Math.max(0, Math.ceil(difference / Math.abs(step)));
     Reflect.defineProperty(this, 'length', {
       configurable: false,
       enumerable: false,
-      writable: false,
-      value: length,
+      get() {
+        const difference = this.step > 0 ? this.stop - this.start : this.start - this.stop;
+        const length = Math.ceil(difference / Math.abs(this.step));
+        return Math.max(0, length);
+      },
     });
 
-    const proxy = new ArrayIndicesProxy(this, {
+    const proxy = new Proxy(this, {
+      set(target, property, value) {
+        return (property === 'length') ? false : Reflect.set(target, property, value);
+      },
+    });
+
+    const indicesProxy = new ArrayIndicesProxy(proxy, {
       get(target, index) {
         if (index < target.length) {
           const value = target.start + (target.step * index);
@@ -57,7 +64,7 @@ export class PythonRange {
       },
       getOwnPropertyDescriptor(target, index) {
         const indexDescriptor = {
-          value: Reflect.get(proxy, index),
+          value: Reflect.get(indicesProxy, index),
           configurable: false,
           enumerable: true,
           writable: false,
@@ -86,7 +93,7 @@ export class PythonRange {
       },
     });
 
-    return proxy;
+    return indicesProxy;
   }
   includes(value = mandatory('value'), ...rest) {
     if (rest.length !== 0) {

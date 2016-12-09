@@ -48,6 +48,14 @@ describe('PythonRange', () => {
           value: descriptor.value,
         }));
     });
+    it('changing them updates the length property', () => {
+      r.start = 0;
+      expect(r.length).to.equal(6);
+      r.stop = 8;
+      expect(r.length).to.equal(4);
+      r.step = 1;
+      expect(r.length).to.equal(8);
+    });
   });
   describe('length property', () => {
     it('has the correct value', () => {
@@ -60,13 +68,15 @@ describe('PythonRange', () => {
       expect(range(-10)).to.have.property('length', 0);
       expect(range(0, -10, -1)).to.have.property('length', 10);
     });
-    it('is non-configurable, non-enumerable and non-writable', () => {
-      expect(Reflect.getOwnPropertyDescriptor(range(10), 'length')).to.deep.equal({
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: 10,
-      });
+    it('is non-configurable and non-enumerable', () => {
+      const descriptor = Reflect.getOwnPropertyDescriptor(range(10), 'length');
+      expect(descriptor.configurable).to.be.false;
+      expect(descriptor.enumerable).to.be.false;
+    });
+    it('cannot be modified', () => {
+      const r = range(10);
+      expect(Reflect.set(r, 'length', 15)).to.be.false;
+      expect(r.length).to.equal(10);
     });
   });
   describe('numeric properties', () => {

@@ -39,6 +39,6 @@
     "lodash": "^4.17.0"
   },
   "scripts": {
-    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && babel-node babel-istanbul cover _mocha -- tests/**/*.js --compilers js:babel-core/register && webpack"
+    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- tests/**/*.js --compilers js:babel-core/register && webpack"
   }
 }

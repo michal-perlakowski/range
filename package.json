@@ -1,6 +1,6 @@
 {
   "name": "python-range",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A JavaScript implementation of the Python's range() function.",
   "keywords": [
     "python",
@@ -38,7 +38,6 @@
     "lodash": "^4.17.0"
   },
   "scripts": {
-    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start",
-    "build": "webpack"
+    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && webpack"
   }
 }

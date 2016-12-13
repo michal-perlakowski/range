@@ -1,0 +1,10 @@
+.git
+coverage
+node_modules
+src
+tests
+.babelrc
+.eslintrc.json
+.travis.yml
+karma.conf.js
+webpack.config.babel.js

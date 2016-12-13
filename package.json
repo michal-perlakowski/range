@@ -38,7 +38,7 @@
     "lodash": "^4.17.0"
   },
   "scripts": {
-    "karma": "karma",
+    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start",
     "build": "webpack"
   }
 }

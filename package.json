@@ -18,6 +18,7 @@
     "babel-preset-env": "1.0.2",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "eslint": "^3.9.0",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.0.1",
@@ -39,6 +40,6 @@
     "lodash": "^4.17.0"
   },
   "scripts": {
-    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- tests/**/*.js --compilers js:babel-core/register && webpack"
+    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && webpack"
   }
 }

@@ -6,7 +6,6 @@ module.exports = function karma(config) {
       'tests/**/*.js',
     ],
     preprocessors: {
-      'src/**/*.js': ['webpack', 'sourcemap', 'coverage'],
       'tests/**/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
@@ -39,7 +38,7 @@ module.exports = function karma(config) {
     webpackMiddleware: {
       noInfo: 'true',
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha'],
     logLevel: config.LOG_WARN,
     browsers: [process.env.TRAVIS ? 'Chrome_travis_ci' : 'Chrome', 'Firefox'],
     customLaunchers: {

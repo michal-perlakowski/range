@@ -40,6 +40,12 @@ module.exports = function karma(config) {
     },
     reporters: ['mocha'],
     logLevel: config.LOG_WARN,
-    browsers: ['Chrome', 'Firefox'],
+    browsers: [process.env.TRAVIS ? 'Chrome_travis_ci' : 'Chrome', 'Firefox'],
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox'],
+      },
+    },
   });
 };

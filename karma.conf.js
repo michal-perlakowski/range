@@ -47,5 +47,6 @@ module.exports = function karma(config) {
         flags: ['--no-sandbox'],
       },
     },
+    singleRun: process.env.TRAVIS,
   });
 };

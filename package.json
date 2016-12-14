@@ -12,7 +12,7 @@
   "repository": "Gothdo/range",
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-istanbul": "^0.11.0",
+    "babel-istanbul": "^0.12.0",
     "babel-loader": "^6.2.7",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "1.0.2",

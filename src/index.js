@@ -136,7 +136,11 @@ export class PythonRange {
     if (rest.length !== 0) {
       throw new Error(`Expected zero arguments; got ${rest.length}`);
     }
-    [this.start, this.stop, this.step] = [last(this), this.start - 1, -this.step];
+    [this.start, this.stop, this.step] = [
+      last(this),
+      this.start - Math.sign(this.step),
+      -this.step,
+    ];
     return this;
   }
   toString() {

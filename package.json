@@ -40,6 +40,11 @@
     "lodash": "^4.17.0"
   },
   "scripts": {
-    "test": "mocha tests/**/*.js --compilers js:babel-core/register && karma start && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && webpack"
+    "test-node": "mocha tests/**/*.js --compilers js:babel-core/register",
+    "test-karma": "karma start",
+    "coverage": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "build": "webpack",
+    "test": "npm run test-node && npm run test-karma",
+    "travis-test": "npm run test && npm run coverage && build"
   }
 }

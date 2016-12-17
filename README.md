@@ -39,7 +39,7 @@ for (const n of r) {
   console.log(n); // logs 3, 4 and 5
 }
 for (const i in r) {
-  console.log([i, r[r]]); // logs [0, 3], [1, 4] and [2, 5]
+  console.log([i, r[i]]); // logs ['0', 3], ['1', 4] and ['2', 5]
 }
 ```
 
@@ -51,8 +51,8 @@ See [Why is “1000000000000000 in range(1000000000000001)” so fast in Python 
 
 ```javascript
 console.log(range(1000000000000001).includes(1000000000000000)); // true
-console.log(range(0, 1000000000000000000001, 10).includes(1000000000000000000000)); // true
-console.log(range(0, -1000000000, -3)[12345678]; // -37037034
+console.log(range(0, 100000000000001, 10).includes(100000000000000)); // true
+console.log(range(0, -1000000000, -3)[12345678]); // -37037034
 ```
 
 # Documentation
@@ -108,7 +108,7 @@ Returns `true` if the range contains the specified value; otherwise returns `fal
 
 ```javascript
 console.log(range(3, 5).includes(3)); // true
-console.log(range(10)).includes(10); // false
+console.log(range(10).includes(10)); // false
 ```
 
 ## `PythonRange.prototype.min()`
@@ -117,7 +117,7 @@ Returns the smallest value in the range.
 
 ```javascript
 console.log(range(10).min()); // 0
-console.log(range(0, -15, -1).min()); // -15
+console.log(range(0, -15, -1).min()); // -14
 ```
 
 ## `PythonRange.prototype.max()`
@@ -135,7 +135,7 @@ Reverses the range in-place and returns it.
 
 ```javascript
 console.log(range(2, 5).reverse()); // range(4, 1, -1)
-console.log(range(10, 0, -1).reverse()); // range(1, 10, 1)
+console.log(range(10, 0, -1).reverse()); // range(1, 11, 1)
 ```
 
 ## `PythonRange.prototype.toString()`
@@ -143,7 +143,7 @@ console.log(range(10, 0, -1).reverse()); // range(1, 10, 1)
 Returns a string `range(<start>, <stop>, <step>)`, where `<start>`, `<stop>` and `<step>` are the `start`, `stop` and `step` properties of the range.
 
 ```javascript
-console.log(range(3, 6, 2)); // range(3, 6, 2)
+console.log(String(range(3, 6, 2))); // range(3, 6, 2)
 ```
 
 ## `PythonRange.prototype.valueOf()`

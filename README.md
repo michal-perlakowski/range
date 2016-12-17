@@ -1,6 +1,12 @@
 # range
 A JavaScript implementation of the Python's `range()` function.
 
+# Installation
+
+```
+npm i python-range
+```
+
 # Examples
 
 ## Basic usage

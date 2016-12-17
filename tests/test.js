@@ -203,6 +203,7 @@ describe('PythonRange', () => {
       expect(PythonRange.areEqual(range(2, 5).reverse(), range(4, 1, -1))).to.be.true;
       expect(PythonRange.areEqual(range(0, 10, 2).reverse(), range(8, -1, -2))).to.be.true;
       expect(PythonRange.areEqual(range(0, 3, 3).reverse(), range(0, 1))).to.be.true;
+      expect(PythonRange.areEqual(range(10, 0, -1).reverse(), range(1, 11, 1))).to.be.true;
     });
   });
   describe('@@iterator', () => {

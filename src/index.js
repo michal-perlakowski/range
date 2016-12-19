@@ -1,5 +1,6 @@
 import 'babel-polyfill';
-import { head, last } from 'lodash';
+import head from 'lodash.head';
+import last from 'lodash.last';
 import ArrayIndicesProxy from './array-indices-proxy';
 
 const mod = (n, m) => ((n % m) + m) % m;

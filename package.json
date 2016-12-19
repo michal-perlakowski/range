@@ -37,7 +37,9 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
-    "lodash": "^4.17.0"
+    "lodash.frompairs": "^4.0.1",
+    "lodash.head": "^4.0.1",
+    "lodash.last": "^3.0.0"
   },
   "scripts": {
     "test-node": "mocha tests/**/*.js --compilers js:babel-core/register",

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { fromPairs } from 'lodash';
+import fromPairs from 'lodash.frompairs';
 import ArrayIndicesProxy from '../src/array-indices-proxy';
 
 const checkTrap = (name, ...args) => {

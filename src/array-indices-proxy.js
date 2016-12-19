@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import fromPairs from 'lodash.frompairs';
 
 export default class ArrayIndicesProxy {
   constructor(targetArray, handler) {
-    const newHandler = _.fromPairs(Object.entries(handler).map(([name, trap]) => {
+    const newHandler = fromPairs(Object.entries(handler).map(([name, trap]) => {
       const propertyAccessTraps = ['defineProperty', 'deleteProperty', 'get', 'getOwnPropertyDescriptor', 'has', 'set'];
       if (propertyAccessTraps.includes(name)) {
         return [name, (target, property, ...other) => {

@@ -216,8 +216,8 @@ describe('PythonRange', () => {
     });
   });
   describe('@@toStringTag', () => {
-    it('returns a "PythonRange" string', () => {
-      expect(Reflect.apply(Object.prototype.toString, range(3), [])).to.equal('[object PythonRange]');
+    it('equals to "PythonRange"', () => {
+      expect(range(3)[Symbol.toStringTag]).to.equal('PythonRange');
     });
   });
   describe('#toString', () => {

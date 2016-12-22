@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import values from 'babel-runtime/core-js/array/values';
 import head from 'lodash.head';
 import last from 'lodash.last';
 import ArrayIndicesProxy from './array-indices-proxy';
@@ -151,7 +151,7 @@ export class PythonRange {
     return this.toString();
   }
   [Symbol.iterator]() {
-    return Reflect.apply(Array.prototype.values, this, []);
+    return values(this);
   }
   static areEqual(a = mandatory('a'), b = mandatory('b'), ...rest) {
     if (rest.length !== 0) {

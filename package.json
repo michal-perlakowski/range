@@ -14,6 +14,7 @@
     "babel-cli": "^6.18.0",
     "babel-istanbul": "^0.12.1",
     "babel-loader": "^6.2.7",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-env": "1.1.4",
@@ -46,7 +47,7 @@
     "test-node": "mocha tests/**/*.js --compilers js:babel-core/register",
     "test-karma": "karma start",
     "coverage": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "webpack",
+    "build": "webpack --optimize-minimize",
     "test": "npm run test-node && npm run test-karma",
     "travis-test": "npm run test && npm run coverage && npm run build"
   }

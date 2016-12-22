@@ -10,5 +10,5 @@
       }
     }]
   ],
-  "plugins": ["transform-object-rest-spread", "transform-runtime"]
+  "plugins": ["transform-object-rest-spread", "transform-es2015-shorthand-properties", "transform-runtime"]
 }

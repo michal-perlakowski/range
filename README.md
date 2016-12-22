@@ -28,7 +28,7 @@ console.log(r[3]); // 3
 console.log(r.length); // 10
 
 console.log(Array.from(range(2, 5))); // [2, 3, 4]
-console.log(Array.from(range(5, 0, -1))); [5, 4, 3, 2, 1]
+console.log(Array.from(range(5, 0, -1))); // [5, 4, 3, 2, 1]
 ```
 
 ## Iteration
@@ -82,7 +82,7 @@ console.log(r.stop); // 3
 
 ## `start`, `stop` and `step` properties
 
-The `PythonRange` constructor creates these properties based on the arguments passed to the constructor, or the default values. These properties can are writable, and changing them automatically updates the range.
+The `PythonRange` constructor creates these properties based on the arguments passed to the constructor, or the default values. These properties are writable, and changing them automatically updates the range.
 
 ```javascript
 const r = range(5);

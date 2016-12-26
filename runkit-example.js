@@ -1,3 +1,5 @@
+// IMPORTANT: You have to choose Node 6, because previous versions don't support Proxy.
+
 const { default: range } = require('python-range');
 
 const r = range(10);

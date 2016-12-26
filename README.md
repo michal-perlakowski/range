@@ -16,6 +16,8 @@ npm i python-range
 
 # Examples
 
+[Try it out in your browser](https://runkit.com/npm/python-range).
+
 ## Basic usage
 
 ```javascript

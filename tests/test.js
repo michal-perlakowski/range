@@ -65,7 +65,7 @@ describe('PythonRange', () => {
       expect(range(1, 12, 2)).to.have.property('length', 6);
       expect(range(1, 1)).to.have.property('length', 0);
       expect(range(-10)).to.have.property('length', 0);
-      expect(range(-10)).to.have.property('length', 0);
+      expect(range(-10, -15, -6)).to.have.property('length', 1);
       expect(range(0, -10, -1)).to.have.property('length', 10);
     });
     it('is non-configurable and non-enumerable', () => {
@@ -82,31 +82,31 @@ describe('PythonRange', () => {
   describe('numeric properties', () => {
     it('exist', () => {
       const r = range(2);
-      expect(Reflect.has(r, '-1')).to.be.false;
-      expect(Reflect.has(r, '0')).to.be.true;
-      expect(Reflect.has(r, '1')).to.be.true;
-      expect(Reflect.has(r, '3')).to.be.false;
+      expect(-1 in r).to.be.false;
+      expect(0 in r).to.be.true;
+      expect(1 in r).to.be.true;
+      expect(3 in r).to.be.false;
     });
     it('have correct values', () => {
       let r = range(3);
-      expect(Reflect.get(r, '-1')).to.be.undefined;
-      expect(Reflect.get(r, '0')).to.equal(0);
-      expect(Reflect.get(r, '1')).to.equal(1);
-      expect(Reflect.get(r, '2')).to.equal(2);
-      expect(Reflect.get(r, '3')).to.be.undefined;
+      expect(r[-1]).to.be.undefined;
+      expect(r[0]).to.equal(0);
+      expect(r[1]).to.equal(1);
+      expect(r[2]).to.equal(2);
+      expect(r[3]).to.be.undefined;
 
       r = range(4, 5);
-      expect(Reflect.get(r, '-1')).to.be.undefined;
-      expect(Reflect.get(r, '0')).to.equal(4);
-      expect(Reflect.get(r, '1')).to.be.undefined;
+      expect(r[-1]).to.be.undefined;
+      expect(r[0]).to.equal(4);
+      expect(r[1]).to.be.undefined;
 
       r = range(3, 6, 2);
-      expect(Reflect.get(r, '0')).to.equal(3);
-      expect(Reflect.get(r, '1')).to.equal(5);
+      expect(r[0]).to.equal(3);
+      expect(r[1]).to.equal(5);
 
       r = range(2, 0, -1);
-      expect(Reflect.get(r, '0')).to.equal(2);
-      expect(Reflect.get(r, '1')).to.equal(1);
+      expect(r[0]).to.equal(2);
+      expect(r[1]).to.equal(1);
     });
     it('are non-configurable, enumerable and non-writable', () => {
       expect(Reflect.getOwnPropertyDescriptor(range(1, 2), '0')).to.deep.equal({
@@ -152,6 +152,9 @@ describe('PythonRange', () => {
       expect(range(10, 0, -2).includes(10)).to.be.true;
       expect(range(10, 0, -2).includes(8)).to.be.true;
       expect(range(10, 0, -2).includes(2)).to.be.true;
+      expect(range(-5, 0).includes(-5)).to.be.true;
+      expect(range(-10, -5).includes(-6)).to.be.true;
+      expect(range(-5, 5).includes(2)).to.be.true;
     });
     it('returns false if the range doesn\'t include the specified number', () => {
       expect(range(3).includes(-1)).to.be.false;
@@ -161,6 +164,10 @@ describe('PythonRange', () => {
       expect(range(10, 0, -2).includes(11)).to.be.false;
       expect(range(10, 0, -2).includes(9)).to.be.false;
       expect(range(10, 0, -2).includes(0)).to.be.false;
+      expect(range(-5, 0).includes(0)).to.be.false;
+      expect(range(-5, 0).includes(5)).to.be.false;
+      expect(range(-10, -5).includes(-5)).to.be.false;
+      expect(range(-10, -5).includes(-1)).to.be.false;
     });
   });
   describe('#min', () => {

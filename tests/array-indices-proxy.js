@@ -29,7 +29,7 @@ describe('ArrayIndicesProxy', () => {
     });
     it('calls the appropriate Reflect methods on the target for properties which are not array indices', () => {
       const propertyAccessTraps = ['defineProperty', 'deleteProperty', 'get', 'getOwnPropertyDescriptor', 'has', 'set'];
-      const handler = fromPairs(propertyAccessTraps.map(name => [name, Reflect[name]]));
+      const handler = fromPairs(propertyAccessTraps.map(name => [name, () => {}]));
       const proxy = new ArrayIndicesProxy([1, 2, 3], handler);
       Reflect.defineProperty(proxy, 'test', { configurable: true, enumerable: true, value: 42 });
       expect(proxy).to.have.property('test', 42);

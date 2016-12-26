@@ -3,8 +3,6 @@ import head from 'lodash.head';
 import last from 'lodash.last';
 import ArrayIndicesProxy from './array-indices-proxy';
 
-const mod = (n, m) => ((n % m) + m) % m;
-
 const mandatory = (parameter) => {
   throw new Error(`The ${parameter} parameter is mandatory`);
 };
@@ -21,49 +19,61 @@ export class PythonRange {
       throw new Error('All arguments must be integers');
     }
 
-    const step = args.length === 3 ? args[2] : 1;
+    const step = args[2] !== undefined ? args[2] : 1;
     if (step === 0) {
       throw new Error('The step argument must not be zero');
     }
     let [start, stop] = args;
     [start, stop] = (stop === undefined) ? [0, start] : [start, stop];
-    const descriptor = {
+    const baseDescriptor = {
       configurable: false,
       enumerable: false,
       writable: true,
     };
-    Reflect.defineProperty(this, 'start', { ...descriptor, value: start });
-    Reflect.defineProperty(this, 'stop', { ...descriptor, value: stop });
-    Reflect.defineProperty(this, 'step', { ...descriptor, value: step });
+    Reflect.defineProperty(this, 'start', { ...baseDescriptor, value: start });
+    Reflect.defineProperty(this, 'stop', { ...baseDescriptor, value: stop });
+    Reflect.defineProperty(this, 'step', { ...baseDescriptor, value: step });
 
     Reflect.defineProperty(this, 'length', {
       configurable: false,
       enumerable: false,
       get() {
-        const difference = this.step > 0 ? this.stop - this.start : this.start - this.stop;
-        const length = Math.ceil(difference / Math.abs(this.step));
+        const length = Math.ceil((this.stop - this.start) / this.step);
         return Math.max(0, length);
       },
     });
 
     Reflect.defineProperty(this, Symbol.toStringTag, {
       configurable: false,
-      enumerable: false,
       writable: false,
+      enumerable: false,
       value: 'PythonRange',
     });
 
+    // Prevent the length property from being modified.
+    // We can't just set it as non-writable, because it has a getter.
     const proxy = new Proxy(this, {
       set(target, property, value) {
         return (property === 'length') ? false : Reflect.set(target, property, value);
+      },
+      deleteProperty() {
+        return false;
+      },
+      // In order to be able to create numeric properties on-demand,
+      // the object has to be extensible.
+      preventExtensions() {
+        return false;
+      },
+      ownKeys(target) {
+        const numericProperties = Object.keys(Array.from({ length: target.length }));
+        return [...Reflect.ownKeys(target), ...numericProperties];
       },
     });
 
     const indicesProxy = new ArrayIndicesProxy(proxy, {
       get(target, index) {
         if (index < target.length) {
-          const value = target.start + (target.step * index);
-          return value;
+          return target.start + (target.step * index);
         }
         return undefined;
       },
@@ -71,8 +81,8 @@ export class PythonRange {
         return index < target.length;
       },
       getOwnPropertyDescriptor(target, index) {
-        const indexDescriptor = {
-          value: Reflect.get(indicesProxy, index),
+        const descriptor = {
+          value: indicesProxy[index],
           configurable: false,
           enumerable: true,
           writable: false,
@@ -80,24 +90,14 @@ export class PythonRange {
         // It is neccessary to define this property on target, because proxy cannot
         // report a non-existing property as non-configurable.
         // See http://stackoverflow.com/q/40921884/3853934
-        Reflect.defineProperty(target, String(index), indexDescriptor);
-        return indexDescriptor;
-      },
-      set() {
-        return false;
+        Reflect.defineProperty(target, String(index), descriptor);
+        return descriptor;
       },
       defineProperty() {
         return false;
       },
-      deleteProperty() {
+      set() {
         return false;
-      },
-      preventExtensions() {
-        return false;
-      },
-      ownKeys(target) {
-        const numericProperties = Object.keys(Array.from({ length: target.length }));
-        return [...Reflect.ownKeys(target), ...numericProperties];
       },
     });
 
@@ -113,7 +113,7 @@ export class PythonRange {
     return (this.step > 0
         ? value >= this.start && value < this.stop
         : value > this.stop && value <= this.start)
-      && mod(value - this.start, this.step) === 0;
+      && (value - this.start) % this.step === 0;
   }
   min(...rest) {
     if (rest.length !== 0) {
@@ -148,6 +148,9 @@ export class PythonRange {
     return `range(${this.start}, ${this.stop}, ${this.step})`;
   }
   valueOf() {
+    return this.toString();
+  }
+  inspect() {
     return this.toString();
   }
   [Symbol.iterator]() {

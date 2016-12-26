@@ -64,10 +64,6 @@ export class PythonRange {
       preventExtensions() {
         return false;
       },
-      ownKeys(target) {
-        const numericProperties = Object.keys(Array.from({ length: target.length }));
-        return [...Reflect.ownKeys(target), ...numericProperties];
-      },
     });
 
     const indicesProxy = new ArrayIndicesProxy(proxy, {

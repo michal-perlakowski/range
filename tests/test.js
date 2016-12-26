@@ -134,9 +134,6 @@ describe('PythonRange', () => {
   it('cannot be made non-extensible', () => {
     expect(Reflect.preventExtensions(range(10))).to.be.false;
   });
-  it('returns a correct result for Object.getOwnPropertyNames()', () => {
-    expect(Object.getOwnPropertyNames(range(3))).to.deep.equal(['start', 'stop', 'step', 'length', '0', '1', '2']);
-  });
   describe('#includes', () => {
     it('throws an error for invalid arguments', () => {
       expect(() => range(3).includes()).to.throw(Error);

@@ -38,9 +38,6 @@ const r = range(3, 6);
 for (const n of r) {
   console.log(n); // logs 3, 4 and 5
 }
-for (const i in r) {
-  console.log([i, r[i]]); // logs ['0', 3], ['1', 4] and ['2', 5]
-}
 ```
 
 ## Lazy evaluation

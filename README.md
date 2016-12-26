@@ -38,6 +38,7 @@ const r = range(3, 6);
 for (const n of r) {
   console.log(n); // logs 3, 4 and 5
 }
+r.forEach(n => console.log(n)); // logs 3, 4, and 5
 ```
 
 ## Lazy evaluation
@@ -98,6 +99,10 @@ console.log(r.length); // 5
 r.stop = 3;
 console.log(r.length); // 3
 ```
+
+## `PythonRange.prototype.forEach(<callable> callback[, <object> thisArg])`
+
+Executes the `callback` once for each element with element, current index and the range as arguments. Works the same as `Array.prototype.forEach()`.
 
 ## `PythonRange.prototype.includes(<int> value)`
 

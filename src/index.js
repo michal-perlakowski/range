@@ -99,6 +99,12 @@ export class PythonRange {
 
     return indicesProxy;
   }
+  forEach(callback = mandatory('callback'), thisArg = this, ...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected at most two arguments; got ${rest.length + 2}`);
+    }
+    Array.prototype.forEach.call(this, callback, thisArg);
+  }
   includes(value = mandatory('value'), ...rest) {
     if (rest.length !== 0) {
       throw new Error(`Expected one argument; got ${rest.length + 1}`);

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { isClass } from 'typechecker';
+import sinon from 'sinon';
 import range, { PythonRange } from '../src/index';
 
 describe('range', () => {
@@ -133,6 +134,32 @@ describe('PythonRange', () => {
   });
   it('cannot be made non-extensible', () => {
     expect(Reflect.preventExtensions(range(10))).to.be.false;
+  });
+  describe('#forEach', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => range(3).forEach()).to.throw(Error);
+      expect(() => range(3).forEach(42)).to.throw(Error);
+      expect(() => range(3).forEach(class {})).to.throw(Error);
+      expect(() => range(3).forEach(() => {}, () => {}, () => {})).to.throw(Error);
+    });
+    it('iterates over the range', () => {
+      const spy = sinon.spy();
+      const r = range(3, -4, -2);
+      r.forEach(spy);
+      expect(spy.args).to.deep.equal([
+        [3, 0, r],
+        [1, 1, r],
+        [-1, 2, r],
+        [-3, 3, r],
+      ]);
+    });
+    it('uses the provided value as this', () => {
+      const spy = sinon.spy();
+      const r = range(1);
+      const thisArg = {};
+      r.forEach(spy, thisArg);
+      expect(spy.calledOn(thisArg));
+    });
   });
   describe('#includes', () => {
     it('throws an error for invalid arguments', () => {

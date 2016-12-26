@@ -263,6 +263,12 @@ describe('PythonRange', () => {
       expect(range(4, 2, -1).valueOf()).to.equal(range(4, 2, -1).toString());
     });
   });
+  describe('#inspect', () => {
+    it('returns the result of toString() method', () => {
+      expect(range(3).inspect()).to.equal(range(3).toString());
+      expect(range(4, 2, -1).inspect()).to.equal(range(4, 2, -1).toString());
+    });
+  });
   describe('PythonRange.areEqual()', () => {
     it('throws an error for invalid arguments', () => {
       expect(() => PythonRange.areEqual()).to.throw(Error);

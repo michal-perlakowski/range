@@ -9,7 +9,7 @@ const checkTrap = (name, ...args) => {
   const proxy = new ArrayIndicesProxy(target, {
     [name]: spy,
   });
-  const properties = ['-1', '0', '1', '2', 'test', 'constructor'];
+  const properties = ['-1', '0', '1', '2', ' 1', 'test', 'constructor'];
   properties.forEach(property => Reflect[name](proxy, property, ...args));
   expect(spy.callCount).to.equal(3);
   expect(spy.calledWith(target, 0)).to.be.true;

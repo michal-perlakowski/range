@@ -50,23 +50,7 @@ export class PythonRange {
       value: 'PythonRange',
     });
 
-    // Prevent the length property from being modified.
-    // We can't just set it as non-writable, because it has a getter.
-    const proxy = new Proxy(this, {
-      set(target, property, value) {
-        return (property === 'length') ? false : Reflect.set(target, property, value);
-      },
-      deleteProperty() {
-        return false;
-      },
-      // In order to be able to create numeric properties on-demand,
-      // the object has to be extensible.
-      preventExtensions() {
-        return false;
-      },
-    });
-
-    const indicesProxy = new ArrayIndicesProxy(proxy, {
+    const indicesProxy = new ArrayIndicesProxy(this, {
       get(target, index) {
         if (index < target.length) {
           return target.start + (target.step * index);
@@ -93,6 +77,14 @@ export class PythonRange {
         return false;
       },
       set() {
+        return false;
+      },
+      deleteProperty() {
+        return false;
+      },
+      // In order to be able to create numeric properties on-demand,
+      // the object has to be extensible.
+      preventExtensions() {
         return false;
       },
     });

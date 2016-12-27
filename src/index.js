@@ -43,13 +43,6 @@ export class PythonRange {
       },
     });
 
-    Reflect.defineProperty(this, Symbol.toStringTag, {
-      configurable: false,
-      writable: false,
-      enumerable: false,
-      value: 'PythonRange',
-    });
-
     const indicesProxy = new ArrayIndicesProxy(this, {
       get(target, index) {
         if (index < target.length) {
@@ -166,6 +159,14 @@ export class PythonRange {
     return a.step === b.step;
   }
 }
+
+Reflect.defineProperty(PythonRange.prototype, Symbol.toStringTag, {
+  configurable: false,
+  writable: false,
+  enumerable: false,
+  value: 'PythonRange',
+});
+
 export default function range(...args) {
   return new PythonRange(...args);
 }

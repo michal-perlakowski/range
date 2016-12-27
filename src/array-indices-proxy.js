@@ -8,8 +8,7 @@ export default class ArrayIndicesProxy {
         return [name, (target, property, ...other) => {
           if (typeof property !== 'symbol') {
             const parsed = parseInt(property, 10);
-            const maxArrayLength = 4294967295;
-            if (parsed >= 0 && parsed <= maxArrayLength) {
+            if (parsed >= 0 && parsed <= Number.MAX_VALUE) {
               return trap(target, parsed, ...other);
             }
           }

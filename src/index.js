@@ -81,7 +81,13 @@ export class PythonRange {
     }
     return this;
   }
-  get(index) {
+  get(index, ...rest) {
+    if (rest.length !== 0) {
+      throw new Error(`Expected one argument; got ${rest.length + 1}`);
+    }
+    if (!Number.isInteger(index)) {
+      throw new Error('The index argument must be an integer');
+    }
     if (index < this.length) {
       return this.start + (this.step * index);
     }

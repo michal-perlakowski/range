@@ -148,6 +148,11 @@ describe('PythonRange', () => {
     });
   }
   describe('#get', () => {
+    it('throws an error for invalid arguments', () => {
+      expect(() => range(3).get()).to.throw(Error);
+      expect(() => range(3).get('1')).to.throw(Error);
+      expect(() => range(3).get(1, 2)).to.throw(Error);
+    });
     it('works the same as numeric properties', () => {
       expect(range(2, 5).get(1)).to.equal(3);
       expect(range(3).get(5)).to.be.undefined;

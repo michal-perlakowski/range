@@ -18,39 +18,41 @@ const checkTrap = (name, ...args) => {
 };
 
 describe('ArrayIndicesProxy', () => {
-  describe('property access traps', () => {
-    it('invokes the trap only for array indices', () => {
-      checkTrap('defineProperty', { configurable: true, enumerable: true });
-      checkTrap('deleteProperty');
-      checkTrap('get');
-      checkTrap('getOwnPropertyDescriptor');
-      checkTrap('has');
-      checkTrap('set', true);
-    });
-    it('calls the appropriate Reflect methods on the target for properties which are not array indices', () => {
-      const propertyAccessTraps = ['defineProperty', 'deleteProperty', 'get', 'getOwnPropertyDescriptor', 'has', 'set'];
-      const handler = fromPairs(propertyAccessTraps.map(name => [name, () => {}]));
-      const proxy = new ArrayIndicesProxy([1, 2, 3], handler);
-      Reflect.defineProperty(proxy, 'test', { configurable: true, enumerable: true, value: 42 });
-      expect(proxy).to.have.property('test', 42);
-      Reflect.deleteProperty(proxy, 'test');
-      expect(proxy).to.not.have.property('test');
-      Reflect.set(proxy, 'test2', 43);
-      expect(proxy).to.have.property('test2', 43);
-      expect(Reflect.get(proxy, 'test2')).to.equal(43);
-      expect(Reflect.has(proxy, 'test2')).to.equal(true);
-      expect(Reflect.getOwnPropertyDescriptor(proxy, 'test2')).to.deep.equal({
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 43,
+  if (typeof Proxy !== 'undefined') {
+    describe('property access traps', () => {
+      it('invokes the trap only for array indices', () => {
+        checkTrap('defineProperty', { configurable: true, enumerable: true });
+        checkTrap('deleteProperty');
+        checkTrap('get');
+        checkTrap('getOwnPropertyDescriptor');
+        checkTrap('has');
+        checkTrap('set', true);
+      });
+      it('calls the appropriate Reflect methods on the target for properties which are not array indices', () => {
+        const propertyAccessTraps = ['defineProperty', 'deleteProperty', 'get', 'getOwnPropertyDescriptor', 'has', 'set'];
+        const handler = fromPairs(propertyAccessTraps.map(name => [name, () => {}]));
+        const proxy = new ArrayIndicesProxy([1, 2, 3], handler);
+        Reflect.defineProperty(proxy, 'test', { configurable: true, enumerable: true, value: 42 });
+        expect(proxy).to.have.property('test', 42);
+        Reflect.deleteProperty(proxy, 'test');
+        expect(proxy).to.not.have.property('test');
+        Reflect.set(proxy, 'test2', 43);
+        expect(proxy).to.have.property('test2', 43);
+        expect(Reflect.get(proxy, 'test2')).to.equal(43);
+        expect(Reflect.has(proxy, 'test2')).to.equal(true);
+        expect(Reflect.getOwnPropertyDescriptor(proxy, 'test2')).to.deep.equal({
+          configurable: true,
+          enumerable: true,
+          writable: true,
+          value: 43,
+        });
       });
     });
-  });
-  describe('other traps', () => {
-    it('are not affected', () => {
-      const proxy = new ArrayIndicesProxy([1, 2, 3], { ownKeys: () => ['0', '1', '2', 'length', 'test'] });
-      expect(Reflect.ownKeys(proxy)).to.deep.equal(['0', '1', '2', 'length', 'test']);
+    describe('other traps', () => {
+      it('are not affected', () => {
+        const proxy = new ArrayIndicesProxy([1, 2, 3], { ownKeys: () => ['0', '1', '2', 'length', 'test'] });
+        expect(Reflect.ownKeys(proxy)).to.deep.equal(['0', '1', '2', 'length', 'test']);
+      });
     });
-  });
+  }
 });

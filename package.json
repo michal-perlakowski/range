@@ -45,7 +45,6 @@
     "test-karma": "karma start",
     "test-coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "build": "webpack --optimize-minimize",
-    "test": "npm run test-node && npm run test-karma",
-    "travis-test": "npm run test && npm run build && [[ $(node -v) = v7.* ]] && npm run test-coverage"
+    "test": "npm run test-node && npm run test-karma"
   }
 }

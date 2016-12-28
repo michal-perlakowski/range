@@ -14,10 +14,14 @@ describe('PythonRange', () => {
     expect(isClass(PythonRange)).to.be.true;
   });
   it('works without Proxy support', () => {
-    const originalProxy = Proxy;
-    Proxy = undefined; // eslint-disable-line
+    let originalProxy;
+    if (typeof Proxy !== 'undefined') {
+      [Proxy, originalProxy] = [originalProxy, Proxy]; // eslint-disable-line
+    }
     expect(() => range(3)).to.not.throw(Error);
-    Proxy = originalProxy; // eslint-disable-line
+    if (typeof originalProxy !== 'undefined') {
+      Proxy = originalProxy; // eslint-disable-line
+    }
   });
   describe('handling incorrect arguments', () => {
     it('throws an error when called with less than one argument', () => {

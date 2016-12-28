@@ -80,6 +80,16 @@ console.log(r.start); // 0
 console.log(r.stop); // 3
 ```
 
+## Numeric properties
+
+You can access range elements using array indices. Note that this requires native `Proxy` support.
+
+```javascript
+const r = range(2, 5);
+console.log(r[0]); // 2
+console.log(r[2]); // 4
+```
+
 ## `start`, `stop` and `step` properties
 
 The `PythonRange` constructor creates these properties based on the arguments passed to the constructor, or the default values. These properties are writable, and changing them automatically updates the range.
@@ -100,6 +110,14 @@ const r = range(5);
 console.log(r.length); // 5
 r.stop = 3;
 console.log(r.length); // 3
+```
+
+## `PythonRange.prototype.get(<int> index)`
+
+Works the same as accessing numeric properties (e.g. `r[2]`). Use this method if you want to execute your code in environments without native `Proxy` support.
+
+```javascript
+console.log(range(2, 5).get(1)); // 3
 ```
 
 ## `PythonRange.prototype.forEach(<callable> callback[, <object> thisArg])`
@@ -177,4 +195,4 @@ Returns an instance of `PythonRange` with the specified arguments.
 
 # Supported environments
 
-`python-range` works in every environment which supports [`Proxy`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Proxy), i.e. Microsoft Edge 12+, Mozilla Firefox 42+, Google Chrome 49+, Safari 10+ and Node.js 6+.
+In order to be able to access numeric properties (e.g. `r[2]`), native `Proxy` support is required (see [compatibility table](https://kangax.github.io/compat-table/es6/#test-Proxy)). If you want to execute your code in environments without `Proxy` support, you can use the `get()` method instead.

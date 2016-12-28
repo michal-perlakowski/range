@@ -8,25 +8,19 @@ export default {
     umdNamedDefine: true,
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
+        options: {
+          babelrc: false,
           presets: [
-            ['env', {
-              targets: {
-                edge: 12,
-                firefox: 42,
-                chrome: 49,
-                safari: 10,
-                node: 6,
-              },
+            ['latest', {
               modules: false,
             }],
           ],
-          plugins: ['transform-object-rest-spread'],
+          plugins: ['transform-object-rest-spread', 'transform-runtime'],
         },
       },
     ],

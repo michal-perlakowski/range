@@ -1,6 +1,3 @@
-import values from 'babel-runtime/core-js/array/values';
-import head from 'lodash.head';
-import last from 'lodash.last';
 import ArrayIndicesProxy from './array-indices-proxy';
 
 const mandatory = (parameter) => {
@@ -43,52 +40,60 @@ export class PythonRange {
       },
     });
 
-    const indicesProxy = new ArrayIndicesProxy(this, {
-      get(target, index) {
-        if (index < target.length) {
-          return target.start + (target.step * index);
-        }
-        return undefined;
-      },
-      has(target, index) {
-        return index < target.length;
-      },
-      getOwnPropertyDescriptor(target, index) {
-        const descriptor = {
-          value: indicesProxy[index],
-          configurable: false,
-          enumerable: true,
-          writable: false,
-        };
-        // It is neccessary to define this property on target, because proxy cannot
-        // report a non-existing property as non-configurable.
-        // See http://stackoverflow.com/q/40921884/3853934
-        Reflect.defineProperty(target, String(index), descriptor);
-        return descriptor;
-      },
-      defineProperty() {
-        return false;
-      },
-      set() {
-        return false;
-      },
-      deleteProperty() {
-        return false;
-      },
-      // In order to be able to create numeric properties on-demand,
-      // the object has to be extensible.
-      preventExtensions() {
-        return false;
-      },
-    });
+    if (typeof Proxy !== 'undefined') {
+      const indicesProxy = new ArrayIndicesProxy(this, {
+        get(target, index) {
+          return target.get(index);
+        },
+        has(target, index) {
+          return index < target.length;
+        },
+        getOwnPropertyDescriptor(target, index) {
+          const descriptor = {
+            value: indicesProxy[index],
+            configurable: false,
+            enumerable: true,
+            writable: false,
+          };
+          // It is neccessary to define this property on target, because proxy cannot
+          // report a non-existing property as non-configurable.
+          // See http://stackoverflow.com/q/40921884/3853934
+          Reflect.defineProperty(target, String(index), descriptor);
+          return descriptor;
+        },
+        defineProperty() {
+          return false;
+        },
+        set() {
+          return false;
+        },
+        deleteProperty() {
+          return false;
+        },
+        // In order to be able to create numeric properties on-demand,
+        // the object has to be extensible.
+        preventExtensions() {
+          return false;
+        },
+      });
 
-    return indicesProxy;
+      return indicesProxy;
+    }
+    return this;
   }
-  forEach(callback = mandatory('callback'), thisArg = this, ...rest) {
+  get(index) {
+    if (index < this.length) {
+      return this.start + (this.step * index);
+    }
+    return undefined;
+  }
+  forEach(callback = mandatory('callback'), thisArg, ...rest) {
     if (rest.length !== 0) {
       throw new Error(`Expected at most two arguments; got ${rest.length + 2}`);
     }
-    Array.prototype.forEach.call(this, callback, thisArg);
+    for (let i = 0; i < this.length; i += 1) {
+      callback.call(thisArg, this.get(i), i, this);
+    }
   }
   includes(value = mandatory('value'), ...rest) {
     if (rest.length !== 0) {
@@ -107,7 +112,7 @@ export class PythonRange {
       throw new Error(`Expected zero arguments; got ${rest.length}`);
     }
     if (this.length !== 0) {
-      return this.step > 0 ? head(this) : last(this);
+      return this.get(this.step > 0 ? 0 : this.length - 1);
     }
     return Infinity;
   }
@@ -116,7 +121,7 @@ export class PythonRange {
       throw new Error(`Expected zero arguments; got ${rest.length}`);
     }
     if (this.length !== 0) {
-      return this.step > 0 ? last(this) : head(this);
+      return this.get(this.step > 0 ? this.length - 1 : 0);
     }
     return -Infinity;
   }
@@ -125,7 +130,7 @@ export class PythonRange {
       throw new Error(`Expected zero arguments; got ${rest.length}`);
     }
     [this.start, this.stop, this.step] = [
-      last(this),
+      this.get(this.length - 1),
       this.start - Math.sign(this.step),
       -this.step,
     ];
@@ -140,8 +145,10 @@ export class PythonRange {
   inspect() {
     return this.toString();
   }
-  [Symbol.iterator]() {
-    return values(this);
+  * [Symbol.iterator]() {
+    for (let i = 0; i < this.length; i += 1) {
+      yield this.get(i);
+    }
   }
   static areEqual(a = mandatory('a'), b = mandatory('b'), ...rest) {
     if (rest.length !== 0) {

@@ -1,10 +1,8 @@
-// IMPORTANT: You have to choose Node 6, because previous versions don't support Proxy.
-
 const { default: range } = require('python-range');
 
 const r = range(10);
 console.log(Array.from(r)); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-console.log(r[3]); // 3
+console.log(r.get(3)); // 3
 console.log(r.length); // 10
 
 console.log(Array.from(range(2, 5))); // [2, 3, 4]

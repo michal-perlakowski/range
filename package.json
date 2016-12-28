@@ -19,7 +19,7 @@
     "babel-plugin-transform-es2015-shorthand-properties": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-env": "^1.1.4",
+    "babel-preset-latest": "^6.16.0",
     "babel-runtime": "^6.20.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.15",
@@ -35,8 +35,6 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "lodash.frompairs": "^4.0.1",
-    "lodash.head": "^4.0.1",
-    "lodash.last": "^3.0.0",
     "mocha": "^3.1.2",
     "sinon": "^2.0.0-pre.4",
     "typechecker": "^4.4.0",
@@ -48,6 +46,6 @@
     "test-coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha --report lcovonly -- tests/**/*.js --compilers js:babel-core/register && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "build": "webpack --optimize-minimize",
     "test": "npm run test-node && npm run test-karma",
-    "travis-test": "npm run test-karma && npm run test-coverage && npm run build"
+    "travis-test": "npm run test && npm run build && [[ $(node -v) = v7.* ]] && npm run test-coverage"
   }
 }

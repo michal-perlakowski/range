@@ -1,14 +1,6 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "edge": 12,
-        "firefox": 42,
-        "chrome": 49,
-        "safari": 10,
-        "node": 6
-      }
-    }]
+    ["latest"]
   ],
-  "plugins": ["transform-object-rest-spread", "transform-es2015-shorthand-properties", "transform-runtime"]
+  "plugins": ["transform-object-rest-spread", "transform-runtime"]
 }

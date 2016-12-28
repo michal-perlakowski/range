@@ -13,6 +13,12 @@ describe('PythonRange', () => {
   it('is a class', () => {
     expect(isClass(PythonRange)).to.be.true;
   });
+  it('works without Proxy support', () => {
+    const originalProxy = Proxy;
+    Proxy = undefined; // eslint-disable-line
+    expect(() => range(3)).to.not.throw(Error);
+    Proxy = originalProxy; // eslint-disable-line
+  });
   describe('handling incorrect arguments', () => {
     it('throws an error when called with less than one argument', () => {
       expect(() => range()).to.throw(Error);
@@ -80,60 +86,68 @@ describe('PythonRange', () => {
       expect(r.length).to.equal(10);
     });
   });
-  describe('numeric properties', () => {
-    it('exist', () => {
-      const r = range(2);
-      expect(-1 in r).to.be.false;
-      expect(0 in r).to.be.true;
-      expect(1 in r).to.be.true;
-      expect(3 in r).to.be.false;
-    });
-    it('have correct values', () => {
-      let r = range(3);
-      expect(r[-1]).to.be.undefined;
-      expect(r[0]).to.equal(0);
-      expect(r[1]).to.equal(1);
-      expect(r[2]).to.equal(2);
-      expect(r[3]).to.be.undefined;
+  if (typeof Proxy !== 'undefined') {
+    describe('numeric properties', () => {
+      it('exist', () => {
+        const r = range(2);
+        expect(-1 in r).to.be.false;
+        expect(0 in r).to.be.true;
+        expect(1 in r).to.be.true;
+        expect(3 in r).to.be.false;
+      });
+      it('have correct values', () => {
+        let r = range(3);
+        expect(r[-1]).to.be.undefined;
+        expect(r[0]).to.equal(0);
+        expect(r[1]).to.equal(1);
+        expect(r[2]).to.equal(2);
+        expect(r[3]).to.be.undefined;
 
-      r = range(4, 5);
-      expect(r[-1]).to.be.undefined;
-      expect(r[0]).to.equal(4);
-      expect(r[1]).to.be.undefined;
+        r = range(4, 5);
+        expect(r[-1]).to.be.undefined;
+        expect(r[0]).to.equal(4);
+        expect(r[1]).to.be.undefined;
 
-      r = range(3, 6, 2);
-      expect(r[0]).to.equal(3);
-      expect(r[1]).to.equal(5);
+        r = range(3, 6, 2);
+        expect(r[0]).to.equal(3);
+        expect(r[1]).to.equal(5);
 
-      r = range(2, 0, -1);
-      expect(r[0]).to.equal(2);
-      expect(r[1]).to.equal(1);
-    });
-    it('are non-configurable, enumerable and non-writable', () => {
-      expect(Reflect.getOwnPropertyDescriptor(range(1, 2), '0')).to.deep.equal({
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: 1,
+        r = range(2, 0, -1);
+        expect(r[0]).to.equal(2);
+        expect(r[1]).to.equal(1);
+      });
+      it('are non-configurable, enumerable and non-writable', () => {
+        expect(Reflect.getOwnPropertyDescriptor(range(1, 2), '0')).to.deep.equal({
+          configurable: false,
+          enumerable: true,
+          writable: false,
+          value: 1,
+        });
+      });
+      it('cannot be reassigned', () => {
+        expect(Reflect.set(range(10), '0', 42)).to.be.false;
+      });
+      it('cannot be changed using defineProperty', () => {
+        expect(Reflect.defineProperty(range(10), '0', {
+          configurable: false,
+          enumerable: true,
+          writable: false,
+          value: 42,
+        })).to.be.false;
+      });
+      it('cannot be deleted', () => {
+        expect(Reflect.deleteProperty(range(10), '0')).to.be.false;
       });
     });
-    it('cannot be reassigned', () => {
-      expect(Reflect.set(range(10), '0', 42)).to.be.false;
+    it('cannot be made non-extensible', () => {
+      expect(Reflect.preventExtensions(range(10))).to.be.false;
     });
-    it('cannot be changed using defineProperty', () => {
-      expect(Reflect.defineProperty(range(10), '0', {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: 42,
-      })).to.be.false;
+  }
+  describe('#get', () => {
+    it('works the same as numeric properties', () => {
+      expect(range(2, 5).get(1)).to.equal(3);
+      expect(range(3).get(5)).to.be.undefined;
     });
-    it('cannot be deleted', () => {
-      expect(Reflect.deleteProperty(range(10), '0')).to.be.false;
-    });
-  });
-  it('cannot be made non-extensible', () => {
-    expect(Reflect.preventExtensions(range(10))).to.be.false;
   });
   describe('#forEach', () => {
     it('throws an error for invalid arguments', () => {

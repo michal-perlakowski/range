@@ -33,12 +33,12 @@
     "karma-mocha": "^1.2.0",
     "karma-mocha-reporter": "^2.2.0",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.8.0",
+    "karma-webpack": "^2.0.1",
     "lodash.frompairs": "^4.0.1",
     "mocha": "^3.1.2",
     "sinon": "^2.0.0-pre.4",
     "typechecker": "^4.4.0",
-    "webpack": "^2.1.0-beta.25"
+    "webpack": "^2.2.0"
   },
   "scripts": {
     "test-node": "mocha tests/**/*.js --compilers js:babel-core/register",

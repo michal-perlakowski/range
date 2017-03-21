@@ -38,7 +38,7 @@
     "mocha": "^3.1.2",
     "sinon": "^2.0.0-pre.4",
     "typechecker": "^4.4.0",
-    "webpack": "^2.2.0"
+    "webpack": "^2.3.0"
   },
   "scripts": {
     "test-node": "mocha tests/**/*.js --compilers js:babel-core/register",

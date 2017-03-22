@@ -1,7 +1,7 @@
 export default {
   entry: './src/index.js',
   output: {
-    path: './dist',
+    path: __dirname + './dist',
     filename: 'python-range.umd.js',
     library: 'pythonRange',
     libraryTarget: 'umd',

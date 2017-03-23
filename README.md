@@ -2,7 +2,6 @@
 
 [![NPM Version](https://img.shields.io/npm/v/python-range.svg?style=flat-square)](https://www.npmjs.com/package/python-range)
 [![Build Status](https://img.shields.io/travis/Gothdo/range.svg?style=flat-square)](https://travis-ci.org/Gothdo/range)
-[![Dependency Status](https://img.shields.io/david/Gothdo/range.svg?style=flat-square)](https://david-dm.org/Gothdo/range)
 [![devDependency Status](https://img.shields.io/david/dev/Gothdo/range.svg?style=flat-square)](https://david-dm.org/Gothdo/range?type=dev)
 [![Coverage Status](https://img.shields.io/coveralls/Gothdo/range.svg?style=flat-square)](https://coveralls.io/github/Gothdo/range?branch=master)
 

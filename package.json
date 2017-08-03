@@ -36,7 +36,7 @@
     "karma-webpack": "^2.0.1",
     "lodash.frompairs": "^4.0.1",
     "mocha": "^3.1.2",
-    "sinon": "^2.0.0-pre.4",
+    "sinon": "^3.0.0",
     "typechecker": "^4.4.0",
     "webpack": "^3.0.0"
   },

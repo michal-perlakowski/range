@@ -22,7 +22,7 @@
     "babel-preset-latest": "^6.22.0",
     "babel-runtime": "^6.22.0",
     "chai": "^4.0.0",
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.0",
     "eslint": "^4.0.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.0.1",

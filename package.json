@@ -33,7 +33,7 @@
     "karma-mocha": "^1.2.0",
     "karma-mocha-reporter": "^2.2.2",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.1",
+    "karma-webpack": "^2.0.13",
     "lodash.frompairs": "^4.0.1",
     "mocha": "^5.0.0",
     "sinon": "^4.0.0",

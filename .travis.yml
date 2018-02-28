@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 node_js:
 - 8
-script: npm run test && npm run test-coverage && npm run build
+script: npm run test-coverage && npm run build
 deploy:
   provider: npm
   on:

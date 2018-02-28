@@ -1,11 +1,10 @@
 import fromPairs from 'lodash.frompairs';
-import includes from 'babel-runtime/core-js/array/includes';
 
 export default class ArrayIndicesProxy {
   constructor(targetArray, handler) {
     const newHandler = fromPairs(Object.entries(handler).map(([name, trap]) => {
       const propertyAccessTraps = ['defineProperty', 'deleteProperty', 'get', 'getOwnPropertyDescriptor', 'has', 'set'];
-      if (includes(propertyAccessTraps, name)) {
+      if (propertyAccessTraps.includes(name)) {
         return [name, (target, property, ...other) => {
           if (typeof property !== 'symbol') {
             const parsed = parseInt(property, 10);

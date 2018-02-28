@@ -2,29 +2,13 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-- 6
 - 8
-addons:
-  firefox: latest
-before_install:
-- export CHROME_BIN=/usr/bin/google-chrome
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sudo apt-get update
-- sudo apt-get install -y libappindicator1 fonts-liberation
-- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-- sudo dpkg -i google-chrome*.deb
-script:
-  if [[ $(node -v) = v6.* ]] ; then
-    npm run test-karma && npm run test-coverage && npm run build;
-  else
-    npm run test && npm run build;
-  fi
+script: npm run test && npm run test-coverage && npm run build
 deploy:
   provider: npm
   on:
     tags: true
   skip_cleanup: true
-  email: "michal@perlakowski.pl"
+  email: michal.perlakowski+npm@gmail.com
   api_key:
-    secure: NgHj5CmpsV7Nb2+LL9KGvgQS/2eOpFmzFIlJzFx4rDq22BGiTAC6mgdb0+sHLPyXlnuvQBrYtFLgD14LvuaJyJ7UAS8HTn1+M+oNmhnr4wBsGikdwUH0/QEvfwh60cT9f6q4BUYCbHjbqulZo7/SUC6n3BUtYWT712ovtzG3Nv5Nh3HA5fwRMtzEkE5YK4IP2lYgQASOiWZeQSUjvgU286IdxHG/x9PHUkGs45mZAXBIW0er3xhhpNvGs6TS9MId3h3roDb9iXEg9fQ+Zqxnt0gUpAWr6eFWg4e8klQVxIChu1S1GPVKZj85K+9LlKLfStT3Sl7/qiRI2//CeCvbFsg7H1RAPuepmD2e+M9nR/l5zlZW912tMNTznQ7QpfzVD4cWbup0vMIocTqJBaD0OlWfq7wXY4fx772Zgu5NvcxnJ50BDl0wsuuqKL9blz+JSrbrGmHHxjrQFYK1YnGZBPE4VOncT+HkxU1lpb/gk6xiWKRR5I69KwQirNG/AryCYYKPf1wd8bycHRq6+yTFpVv7/RehucxVNX0+nVHeNlCwc1mKG5av08ZhQFKdEK8jKMWnLiUMIzrYYKNsFWh3L1NGt5dylg7qu/IqRM4AF6C+V7MlgNtqzVh/HQ7qAwpSQYP0RkGIJhTWInqGcTPXdBhmQo+Me4H+ztpOS5cMCVc=
+    secure: MiCo9tT/X/3hBAw44PwUCN7LWNh3+XQ/Xh6YbdsybLRpuFcypaU8CotzrisaEuKTp/Um4Jyyufq+kBgju1mRmVmYI40CCzMzlbShJQLtB/3qIkplUgQUN/9QeOHArvmdhLN0hKotdjJMcTlNxJBbqIZEGFVlPDXLZ9JSF+gOz1nFAqShz0wngE1so9Av3xcdJtLIcYsE1cSxbGfA2Mon2cTy9SBYCpnzyH0+NoYTm7EG7EFMigJE6c4bLfwHmCDjePgR4ovbQtEx+DT61ZZU/CzBt1yI/8WPz0ltVjbvgi+zkbz4UCrD3uxcaJ2s9N0NVOY6X62OERvQw2RdkXohaM0lxSJ9muFIWI8kriPzPlqo62b+w7Ro/r3UELZvzvTaCX7vcXkBGgu+ceeBjT+Qhk8B1Eg4PHKfWTZOU6rMYehDqHXZvfmQYtQD47mF3jMWxyOI7QnJ/vYnKncXVwsCVsWKVXFOSQd3rtfrMKrtXt5Pc48BdGf7r0uElT24sdR+uoM0YmnvfI7p3Bu/OVmqsi3JYLQzYUjogAbcPw+7IVdgpK8PQYFnYdMJ9fI2AaJZcHgCH9HHDB8Ev8nDAfIm8zpGXyfn+4Rqm66938g7Wc2WEaZOdnFpLciX7XLAAyX9c0VFM8G5ETXkh6lWJPtoj6TspP3Dwec9u2+sn12sWp4=

@@ -6,6 +6,3 @@ tests
 .babelrc
 .eslintrc.json
 .travis.yml
-karma.conf.js
-webpack.config.babel.js
-google-chrome-stable_current_amd64.deb

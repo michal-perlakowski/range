@@ -15,16 +15,16 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-istanbul": "^0.12.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "chai": "^4.0.0",
-    "coveralls": "^3.0.0",
-    "eslint": "^4.0.0",
+    "coveralls": "^3.0.1",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^2.12.0",
     "is-callable": "^1.1.3",
-    "mocha": "^5.0.0",
-    "sinon": "^5.0.0",
+    "mocha": "^5.2.0",
+    "sinon": "^6.0.0",
     "typechecker": "^4.4.0"
   },
   "scripts": {

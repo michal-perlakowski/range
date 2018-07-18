@@ -1,6 +1,6 @@
 {
   "name": "python-range",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A JavaScript implementation of the Python's range() function.",
   "keywords": [
     "python",
